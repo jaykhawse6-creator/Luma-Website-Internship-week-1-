@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Week 1 internship task submission page">
+  <title>Week 1 Task | Static Web Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="task-panel" aria-labelledby="task-title">
+      <header class="task-heading">
+        <span class="week-number" aria-hidden="true">1</span>
+        <h1 id="task-title">Week 1 Task: Transforming Wireframes into Static Web Pages</h1>
+      </header>
+
+      <h2 class="section-heading">Objective</h2>
+      <ol class="objectives">
+        <li><span><strong>Task Objective:</strong> The objective of this task is to convert a provided wireframe concept into a fully functional static web page using HTML and CSS.</span></li>
+        <li><span>The intern will practice translating design mockups into code, ensuring the layout is pixel-perfect, and testing responsiveness on various screen sizes.</span></li>
+        <li><span>This task will set the foundation for your development workflow and help you master the fundamentals of HTML structure and CSS styling.</span></li>
+        <li><span><strong>Expected Deliverables:</strong> A complete HTML file representing the static web page.</span></li>
+        <li><span>A CSS file that accurately styles the webpage based on a provided design concept.</span></li>
+        <li><span>A brief report (PDF or Markdown) explaining your design decisions, layout strategies, and any challenges encountered.</span></li>
+        <li><span><strong>Key Steps:</strong> Analyze the wireframe design and identify key layout elements such as headers, navigation, content areas, and footers.</span></li>
+        <li><span>Create a semantic HTML structure that reflects the design hierarchy, ensuring proper use of HTML tags.</span></li>
+        <li><span>Implement CSS styling that mirrors the design, paying attention to color schemes, fonts, and spacing.</span></li>
+        <li><span>Ensure the design is responsive by testing and adapting to multiple screen sizes using CSS media queries.</span></li>
+        <li><span>Document your approach, the problems you encountered, and how you resolved them in a short report.</span></li>
+        <li><span><strong>Evaluation Criteria:</strong> Your submission will be evaluated on the accuracy of the code in replicating the wireframe, adherence to semantic HTML practices, clarity of CSS organization, responsiveness of the design, and the quality of documentation regarding your design decisions.</span></li>
+        <li><span>Creativity in solving layout challenges and depth of problem-solving explanation is highly valued.</span></li>
+      </ol>
+    </section>
+
+    <section class="submission-panel" aria-labelledby="submission-title">
+      <h2 id="submission-title" class="submission-heading"><span class="cloud-icon" aria-hidden="true">☁</span> Submit your work</h2>
+      <form id="submission-form">
+        <div class="form-group">
+          <label for="report-file">Upload your report file <span class="muted">(Word document only — .doc or .docx)</span></label>
+          <input id="report-file" name="report-file" type="file" accept=".doc,.docx" required>
+        </div>
+
+        <div class="form-group">
+          <label for="github-url">GitHub project URL <span class="muted">(optional)</span></label>
+          <input id="github-url" name="github-url" type="url" placeholder="https://github.com/username/project">
+          <p class="notice"><span aria-hidden="true">ⓘ</span> If your internship or task is technical or software related, sharing the GitHub URL of that project is compulsory — your certificate will not be issued. If your internship is non-technical, please ignore this field.</p>
+        </div>
+
+        <div class="form-group description-group">
+          <label for="description">Write description for the report <span class="muted">(Minimum 200 words)</span></label>
+          <textarea id="description" name="description" minlength="200" required></textarea>
+          <p class="helper">Please write a detailed description of the report you are submitting. This will help the evaluator understand your work better.</p>
+          <p id="word-count" class="word-count" aria-live="polite">0 / 200 words</p>
+        </div>
+
+        <button class="submit-button" type="submit"><span aria-hidden="true">➤</span> Submit</button>
+        <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+      </form>
+      <footer class="panel-footer">Week 1 · HTML &amp; CSS Fundamentals</footer>
+    </section>
+  </main>
+  <script>
+    const form = document.getElementById('submission-form');
+    const description = document.getElementById('description');
+    const wordCount = document.getElementById('word-count');
+    const message = document.getElementById('form-message');
+
+    function countWords(value) {
+      return value.trim() ? value.trim().split(/\\s+/).length : 0;
+    }
+
+    description.addEventListener('input', () => {
+      const count = countWords(description.value);
+      wordCount.textContent = `${count} / 200 words`;
+      wordCount.classList.toggle('complete', count >= 200);
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const count = countWords(description.value);
+      const file = document.getElementById('report-file').files[0];
+      const github = document.getElementById('github-url').value.trim();
+
+      if (!file) {
+        message.textContent = 'Please choose your Word report before submitting.';
+        message.className = 'form-message error';
+        return;
+      }
+      if (!/\\.docx?$/i.test(file.name)) {
+        message.textContent = 'Please upload a .doc or .docx file.';
+        message.className = 'form-message error';
+        return;
+      }
+      if (count < 200) {
+        message.textContent = `Your description has ${count} words. Please write at least 200 words.`;
+        message.className = 'form-message error';
+        return;
+      }
+      if (github && !/^https:\\/\\/(www\\.)?github\\.com\\//i.test(github)) {
+        message.textContent = 'Please enter a valid GitHub project URL.';
+        message.className = 'form-message error';
+        return;
+      }
+      message.textContent = 'Your details are valid. This static demo does not send files to a server.';
+      message.className = 'form-message success';
+    });
+  </script>
+</body>
+</html>
